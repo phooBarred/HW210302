@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model AdsViewModel
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        @foreach (var ad in Model.Ads)
+        {
+        <div class="jumbotron">
+            @if (!string.IsNullOrEmpty(ad.ListedBy))
+            {
+                <h5>Listed by: @ad.ListedBy</h5>
+            }
+            <h5>Listed on: @ad.DateCreated</h5>
+            <h5>Phone number: @ad.PhoneNumber</h5>
+            <h3>Details:</h3>
+            @foreach (string content in ad.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                <p>@ad.Text</p>
+            }
+
+            @if (ad.CanDelete)
+            {
+                <form method="post" action="/home/deletead">
+                    <input type="hidden" value="@ad.Id" />
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            }
+        </div>
+        }
+    </div>
+</div>
