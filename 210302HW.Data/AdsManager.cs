@@ -19,7 +19,6 @@ namespace _210302HW.Data
             using (SqlCommand cmd = connection.CreateCommand())
             {
                 var ads = new List<Ad>();
-
                 cmd.CommandText = @"SELECT * FROM Ads";
                 connection.Open();
                 var reader = cmd.ExecuteReader();
@@ -50,10 +49,10 @@ namespace _210302HW.Data
                 {
                     listedBy = DBNull.Value;
                 }
+
                 cmd.Parameters.AddWithValue("@listedBy", listedBy);
                 cmd.Parameters.AddWithValue("@phone", ad.PhoneNumber);
                 cmd.Parameters.AddWithValue("@text", ad.Text);
-
                 connection.Open();
                 ad.Id = (int)(decimal)cmd.ExecuteScalar();
             }
@@ -65,7 +64,6 @@ namespace _210302HW.Data
             {
                 cmd.CommandText = @"DELETE FROM Ads WHERE ID = @id";
                 cmd.Parameters.AddWithValue("@id", id);
-
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
